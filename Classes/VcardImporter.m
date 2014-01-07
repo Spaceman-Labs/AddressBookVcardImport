@@ -13,7 +13,10 @@
 
 - (id) init {
     if (self = [super init]) {
-        addressBook = ABAddressBookCreate();
+        addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+		ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+			[self parse];
+		});
     }
     
     return self;
@@ -42,6 +45,7 @@
     ABAddressBookSave(addressBook, NULL);
 
     [vcardString release];
+	NSLog(@"done parsing");
 }
 
 - (void) parseLine:(NSString *)line {
@@ -61,7 +65,10 @@
         [self parseEmail:line];
     } else if ([line hasPrefix:@"PHOTO;BASE64"]) {
         base64image = [NSString string];
-    }
+    } else if ([line hasPrefix:@"TEL"]) {
+		[self parsePhoneNumber:line];
+	}
+				
 }
 
 - (void) parseName:(NSString *)line {
@@ -99,6 +106,39 @@
     if (immutableMultiEmail) {
         CFRelease(immutableMultiEmail);
     }
+}
+
+- (void)parsePhoneNumber:(NSString *)line
+{
+	ABMutableMultiValueRef multiEmail = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+	
+	NSArray *mainComponents = [line componentsSeparatedByString:@":"];
+	NSString *phoneNumber = [mainComponents lastObject];
+	NSString *labelsString = [mainComponents firstObject];
+	labelsString = [labelsString stringByReplacingOccurrencesOfString:@"TEL;" withString:@""];
+	labelsString = [labelsString stringByReplacingOccurrencesOfString:@"type=VOICE;" withString:@""];
+	labelsString = [labelsString stringByReplacingOccurrencesOfString:@"type=pref;" withString:@""];
+	NSArray *labels = [labelsString componentsSeparatedByString:@";"];
+	
+	CFStringRef abLabel;
+	NSString *labelValue = [labels firstObject];
+	labelValue = [labelValue stringByReplacingOccurrencesOfString:@"type=" withString:@""];
+	
+	if ([labelValue isEqualToString:@"CELL"]) {
+		abLabel = kABPersonPhoneMobileLabel;
+	} else if ([labelValue isEqualToString:@"WORK"]) {
+		abLabel = kABWorkLabel;
+	} else if ([labelValue isEqualToString:@"IPHONE"]) {
+		abLabel = kABPersonPhoneIPhoneLabel;
+	} else if ([labelValue isEqualToString:@"HOME"]) {
+		abLabel = kABHomeLabel;
+	} else {
+        abLabel = kABOtherLabel;
+    }
+	
+	ABMultiValueAddValueAndLabel(multiEmail, phoneNumber, abLabel, NULL);
+	
+	ABRecordSetValue(personRecord, kABPersonPhoneProperty, multiEmail, nil);
 }
 
 - (void) parseImage {

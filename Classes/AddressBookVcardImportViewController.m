@@ -35,7 +35,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     VcardImporter *importer = [[VcardImporter alloc] init];
-    [importer parse];
 }
 
 
