@@ -15,7 +15,9 @@
     if (self = [super init]) {
         addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
 		ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-			[self parse];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self parse];
+			});
 		});
     }
     
@@ -39,7 +41,10 @@
     NSArray *lines = [vcardString componentsSeparatedByString:@"\n"];
     
     for(NSString* line in lines) {
-        [self parseLine:line];
+		@autoreleasepool {
+			[self parseLine:line];
+		}
+
     }
     
     ABAddressBookSave(addressBook, NULL);
@@ -49,10 +54,10 @@
 }
 
 - (void) parseLine:(NSString *)line {
-    if (base64image && [line hasPrefix:@"  "]) {
+    if (self.base64image && [line hasPrefix:@" "]) {
         NSString *trimmedLine = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        base64image = [base64image stringByAppendingString:trimmedLine];
-    } else if (base64image) {
+        self.base64image = [self.base64image stringByAppendingString:trimmedLine];
+    } else if (self.base64image) {
         // finished contatenating image string
         [self parseImage];
     } else if ([line hasPrefix:@"BEGIN"]) {
@@ -64,8 +69,12 @@
     } else if ([line hasPrefix:@"EMAIL;"]) {
         [self parseEmail:line];
     } else if ([line hasPrefix:@"PHOTO;BASE64"]) {
-        base64image = [NSString string];
-    } else if ([line hasPrefix:@"TEL"]) {
+        self.base64image = [NSString string];
+    } else if ([line hasPrefix:@"PHOTO;ENCODING=b"]) {
+		NSArray *parts = [line componentsSeparatedByString:@":"];
+		NSString *base64 = [parts lastObject];
+		self.base64image = [base64 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	} else if ([line hasPrefix:@"TEL"]) {
 		[self parsePhoneNumber:line];
 	}
 				
@@ -139,11 +148,12 @@
 	ABMultiValueAddValueAndLabel(multiEmail, phoneNumber, abLabel, NULL);
 	
 	ABRecordSetValue(personRecord, kABPersonPhoneProperty, multiEmail, nil);
+	CFRelease(multiEmail);
 }
 
 - (void) parseImage {
-    NSData *imageData = [BaseSixtyFour decode:base64image];
-    base64image = nil;
+    NSData *imageData = [BaseSixtyFour decode:self.base64image];
+    self.base64image = nil;
     ABPersonSetImageData(personRecord, (CFDataRef)imageData, NULL);
     
 }

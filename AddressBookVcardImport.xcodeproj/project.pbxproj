@@ -15,8 +15,8 @@
 		2899E5220DE3E06400AC0155 /* AddressBookVcardImportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* AddressBookVcardImportViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* AddressBookVcardImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* AddressBookVcardImportViewController.m */; };
+		3D670B85187D18C000AA0FA9 /* vCards.vcf in Resources */ = {isa = PBXBuildFile; fileRef = 3D670B84187D18C000AA0FA9 /* vCards.vcf */; };
 		E71087F8126E63C600BFE719 /* VcardImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = E71087F7126E63C600BFE719 /* VcardImporter.m */; };
-		E71087FC126E678800BFE719 /* vCards.vcf in Resources */ = {isa = PBXBuildFile; fileRef = E71087FB126E678800BFE719 /* vCards.vcf */; };
 		E710884B126E74B200BFE719 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E710884A126E74B200BFE719 /* AddressBook.framework */; };
 		E7595E2512706AE400F56593 /* BaseSixtyFour.m in Sources */ = {isa = PBXBuildFile; fileRef = E7595E2412706AE400F56593 /* BaseSixtyFour.m */; };
 /* End PBXBuildFile section */
@@ -34,10 +34,10 @@
 		28D7ACF70DDB3853001CB0EB /* AddressBookVcardImportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookVcardImportViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* AddressBookVcardImport_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookVcardImport_Prefix.pch; sourceTree = "<group>"; };
+		3D670B84187D18C000AA0FA9 /* vCards.vcf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vCards.vcf; path = ../../../Desktop/contacts/vCards.vcf; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* AddressBookVcardImport-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AddressBookVcardImport-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		E71087F6126E63C600BFE719 /* VcardImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VcardImporter.h; sourceTree = "<group>"; };
 		E71087F7126E63C600BFE719 /* VcardImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VcardImporter.m; sourceTree = "<group>"; };
-		E71087FB126E678800BFE719 /* vCards.vcf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vCards.vcf; path = /Users/alan/Desktop/vCards.vcf; sourceTree = "<absolute>"; };
 		E710884A126E74B200BFE719 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E7595E2312706AE400F56593 /* BaseSixtyFour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSixtyFour.h; sourceTree = "<group>"; };
 		E7595E2412706AE400F56593 /* BaseSixtyFour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSixtyFour.m; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E71087FB126E678800BFE719 /* vCards.vcf */,
+				3D670B84187D18C000AA0FA9 /* vCards.vcf */,
 				2899E5210DE3E06400AC0155 /* AddressBookVcardImportViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* AddressBookVcardImport-Info.plist */,
@@ -149,6 +149,8 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AddressBookVcardImport" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -175,7 +177,7 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* AddressBookVcardImportViewController.xib in Resources */,
-				E71087FC126E678800BFE719 /* vCards.vcf in Resources */,
+				3D670B85187D18C000AA0FA9 /* vCards.vcf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

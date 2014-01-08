@@ -12,8 +12,10 @@
 @interface VcardImporter : NSObject {
     ABAddressBookRef addressBook;
     ABRecordRef personRecord;
-    NSString *base64image;
 }
+
+@property (strong, nonatomic) NSString *base64image;
+
 - (void)parse;
 - (void) parseLine:(NSString *)line;
 - (void) parseName:(NSString *)line;
