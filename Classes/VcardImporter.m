@@ -89,7 +89,8 @@
 }
 
 - (void) parseEmail:(NSString *)line {
-    NSArray *mainComponents = [line componentsSeparatedByString:@":"];
+	NSString *fuckNewLines = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSArray *mainComponents = [fuckNewLines componentsSeparatedByString:@":"];
     NSString *emailAddress = [mainComponents objectAtIndex:1];
     CFStringRef label;
     ABMutableMultiValueRef multiEmail;
@@ -121,7 +122,8 @@
 {
 	ABMutableMultiValueRef multiEmail = ABMultiValueCreateMutable(kABMultiStringPropertyType);
 	
-	NSArray *mainComponents = [line componentsSeparatedByString:@":"];
+	NSString *fuckNewLines = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	NSArray *mainComponents = [fuckNewLines componentsSeparatedByString:@":"];
 	NSString *phoneNumber = [mainComponents lastObject];
 	NSString *labelsString = [mainComponents firstObject];
 	labelsString = [labelsString stringByReplacingOccurrencesOfString:@"TEL;" withString:@""];
